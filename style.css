@@ -3,4 +3,29 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: #222;
+    font-weight: 300;
+    padding: 2.5em 0;
+    font-size: 13px;
 }
+
+#content {text-align: center;}
+
+table {margin: 0 auto;}
+
+thead {font-weight: 700;}
+
+th, td {
+    border: 1px solid #555;
+    padding: .25em;
+}
+
+@media screen and (min-width: 320px) {
+    body {
+      font-size: calc(13px + 5 * ((100vw - 320px) / 680));
+    }
+  }
+  @media screen and (min-width: 1000px) {
+    body {
+      font-size: 18px;
+    }
+  }

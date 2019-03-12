@@ -9,3 +9,7 @@ Although I reviewed the docs [here](https://www.wcc.nrcs.usda.gov/web_service/AW
 The [Monthly Snow Data](https://wcc.sc.egov.usda.gov/nwcc/rgrpt?report=snowmonth_hist&state=OR) page at NRCS (Natural Resources Conservation Site) produces a [CSV](https://wcc.sc.egov.usda.gov/reportGenerator/view_csv/customGroupByMonthReport/monthly/651:OR:SNTL%7Cid=%22%22%7Cname/POR_BEGIN,POR_END:1,2,3,4,5,6/WTEQ::collectionDate,SNWD::value,WTEQ::value) of Historic monthly snowfall data at Mount Hood, January through June, every year from 1981 to present.
 
 Inspired by [a blog post by Ben Nadel](https://www.bennadel.com/blog/1504-ask-ben-parsing-csv-strings-with-javascript-exec-regular-expression-command.htm), I converted the CSV into an array, and was then able to retrieve the desired data from this array.
+
+## Technologies Used
+
+As the goal here was the fastest delivery possible, I used jQuery for simple DOM manipulation rather than creating a component architecture.

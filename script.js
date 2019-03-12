@@ -1,0 +1,68 @@
+const url = 'https://wcc.sc.egov.usda.gov/reportGenerator/view_csv/customGroupByMonthReport/monthly/651:OR:SNTL%7Cid=%22%22%7Cname/POR_BEGIN,POR_END:1,2,3,4,5,6/WTEQ::collectionDate,SNWD::value,WTEQ::value';
+
+const corsUrl = 'https://cors-anywhere.herokuapp.com/' + url;
+
+let snowArray = [];
+
+function fetchCSV(corsUrl) {
+    fetch(corsUrl)
+        .then(response => 
+            response.text().then(text =>
+                populateSnowArray(CSVToArray(text))
+            )
+        )
+}
+
+function populateSnowArray(csvArray) {
+    for (let i=57; i<=95; i++) {
+        const snowObj = populateSnowObj(['year', 'janSnow', 'febSnow', 'marSnow', 'aprSnow', 'maySnow', 'junSnow'], [0, 3, 6, 9, 12, 15, 18], csvArray, i);
+        snowArray.push(snowObj);
+    }
+    populateTable(snowArray);
+}
+
+function populateSnowObj(keys, indexes, csvArray, i) {
+    const snowObj = {};
+    let total = 0;
+    keys.forEach((key, index) => {
+        snowObj[key] = isNaN(parseFloat(csvArray[i][indexes[index]])) ? '–' : parseFloat(csvArray[i][indexes[index]]);
+        if (index > 0 && !isNaN(snowObj[key])) total += snowObj[key];
+    })
+    snowObj.total = Math.floor(total * 10) / 10;
+    
+    return snowObj;
+}
+
+function populateTable(snowArray) {
+    let newHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Total</th>
+                </tr>
+            </thead>`;
+    snowArray.forEach(snowYear => {
+        newHTML += `
+            <tr>
+                <td>${snowYear.year}</td>
+                <td>${snowYear.janSnow}</td>
+                <td>${snowYear.febSnow}</td>
+                <td>${snowYear.marSnow}</td>
+                <td>${snowYear.aprSnow}</td>
+                <td>${snowYear.maySnow}</td>
+                <td>${snowYear.junSnow}</td>
+                <td>${snowYear.total}</td>
+            </tr>`;
+    });
+    newHTML += '</table>'
+    $('#content').html(newHTML);
+}
+
+fetchCSV(corsUrl);
