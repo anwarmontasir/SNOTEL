@@ -35,6 +35,7 @@ function populateSnowObj(keys, indexes, csvArray, i) {
 
 function populateTable(snowArray) {
     let newHTML = `
+        <p>Click column header to sort.</p>
         <table>
             <thead>
                 <tr>
@@ -65,4 +66,39 @@ function populateTable(snowArray) {
     $('#content').html(newHTML);
 }
 
-fetchCSV(corsUrl);
+function handleTHClick() {
+    $('#content').on('click', 'th', e => {
+        const index = $(e.target).index();
+        if ($(e.target).hasClass('down')) {
+            sortSnowArray(index, 1, 'up');
+        } else if ($(e.target).hasClass('up')) {
+            sortSnowArray(0, -1);
+        } else {
+            sortSnowArray(index, -1, 'down');
+        }
+    });
+}
+
+function sortSnowArray(index, order, className) {
+    const keyArray = ['year', 'janSnow', 'febSnow', 'marSnow', 'aprSnow', 'maySnow', 'junSnow', 'total'];
+    snowArray.sort(sortByKey(keyArray[index], order));
+    populateTable(snowArray);
+    if (className) {
+        $(`th:nth-child(${index + 1})`).addClass(className);
+        $(`td:nth-child(${index + 1})`).addClass('highlight');
+    }
+}
+
+function sortByKey(key, order) {
+    console.log(order);
+    var sortOrder = order;
+    return function (a,b) {
+        var result = (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+$(function() {
+    fetchCSV(corsUrl);
+    handleTHClick();
+});

@@ -10,6 +10,8 @@ The [Monthly Snow Data](https://wcc.sc.egov.usda.gov/nwcc/rgrpt?report=snowmonth
 
 Inspired by [a blog post by Ben Nadel](https://www.bennadel.com/blog/1504-ask-ben-parsing-csv-strings-with-javascript-exec-regular-expression-command.htm), I converted the CSV into an array, and was then able to retrieve the desired data from this array.
 
+[This Stack Overflow post](https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value) on sorting strings by property value was helpful.
+
 ## Technologies Used
 
 As the goal here was the fastest delivery possible, I used jQuery for simple DOM manipulation rather than creating a component architecture.
