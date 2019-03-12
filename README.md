@@ -2,6 +2,8 @@
 
 Depicting the varying snowpack levels across years at Mt Hood.
 
+See demo at https://anwarmontasir.github.io/SNOTEL/.
+
 ## Challenges faced
 
 Although I reviewed the docs [here](https://www.wcc.nrcs.usda.gov/web_service/AWDB_Web_Service_Reference.htm#_Toc336255535) and [here](https://www.wcc.nrcs.usda.gov/web_service/AWDB_Web_Service_Tutorial.htm), my experience is with REST APIS that produce JSON, and not ones that use SOAP and XML. I couldn't figure out how to fetch the desired data from the NRCS API. 
