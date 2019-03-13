@@ -9,20 +9,33 @@ body {
     text-align: center;
 }
 
+a {color: darkcyan;}
+
 h1 {
     font-size: 2em;
-    margin-bottom: .25em;
+    margin-bottom: .5em;
 }
 h2 {
     font-size: 1.5em;
     margin-bottom: 2em;
 }
 
+main, header {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 #content {text-align: center;}
 
-p {margin-bottom: 1em;}
+p {
+    margin-bottom: 1em;
+    line-height: 1.2;
+}
 
-table {margin: 0 auto;}
+table {
+    margin: 1em auto 2em;
+    width: 100%;
+}
 
 thead {
     font-weight: 700;
@@ -32,6 +45,7 @@ thead {
 th, td {
     border: 1px solid #555;
     padding: .25em;
+    width: 12.5%;
 }
 
 th {cursor: pointer;}

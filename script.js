@@ -4,6 +4,8 @@ const corsUrl = 'https://cors-anywhere.herokuapp.com/' + url;
 
 let snowArray = [];
 
+let units = ['inches', 'centimeters'];
+
 function fetchCSV(corsUrl) {
     fetch(corsUrl)
         .then(response => 
@@ -62,7 +64,8 @@ function populateTable(snowArray) {
                 <td>${snowYear.total}</td>
             </tr>`;
     });
-    newHTML += '</table>'
+    newHTML += `</table>
+    <p>Snowpack levels in ${units[0]}.<br><a href="#" id="unitToggle">View as ${units[1]}</a></p>`;
     $('#content').html(newHTML);
 }
 
@@ -90,7 +93,6 @@ function sortSnowArray(index, order, className) {
 }
 
 function sortByKey(key, order) {
-    console.log(order);
     var sortOrder = order;
     return function (a,b) {
         var result = (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
@@ -98,7 +100,31 @@ function sortByKey(key, order) {
     }
 }
 
+function handleToggleUnits() {
+    $('#content').on('click', '#unitToggle', e => {
+        e.preventDefault();
+        convertUnits()
+    });
+}
+
+function convertUnits() {
+    snowArray.forEach(snowYear => {
+        for (const key in snowYear) {
+            if (key !== 'year' && snowYear[key] !== '–') {
+                if (units[0] === 'inches') {
+                    snowYear[key] = Math.round(snowYear[key] * 10 * 2.54) / 10;
+                } else {
+                    snowYear[key] = Math.round(snowYear[key] * 10 / 2.54) / 10;
+                }
+            }
+        }
+    });
+    units = units.reverse();
+    populateTable(snowArray);
+}
+
 $(function() {
     fetchCSV(corsUrl);
     handleTHClick();
+    handleToggleUnits();
 });
