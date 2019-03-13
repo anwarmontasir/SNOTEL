@@ -17,3 +17,5 @@ Inspired by [a blog post by Ben Nadel](https://www.bennadel.com/blog/1504-ask-be
 ## Technologies Used
 
 As the goal here was the fastest delivery possible, I used jQuery for simple DOM manipulation rather than creating a component architecture.
+
+App is mobile-friendly. Text uses responsive CSS units, and table is legible down to 320px, though at that size the text is small (12px) and toggling units to centimeters causes horizontal scrolling.
