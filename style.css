@@ -5,7 +5,7 @@ body {
     color: #222;
     font-weight: 300;
     padding: 2.5em 1em 5em;
-    font-size: 13px;
+    font-size: 11px;
     text-align: center;
 }
 
@@ -19,6 +19,7 @@ h2 {
     font-size: 1.5em;
     margin-bottom: 2em;
 }
+.nobr {white-space: nowrap;}
 
 main, header {
     max-width: 600px;
@@ -62,10 +63,10 @@ td.highlight {background: lightgoldenrodyellow;}
 
 @media screen and (min-width: 320px) {
     body {
-      font-size: calc(12px + 6 * ((100vw - 320px) / 680));
+      font-size: calc(12px + 6 * ((100vw - 320px) / 400));
     }
   }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 720px) {
     body {
       font-size: 18px;
     }

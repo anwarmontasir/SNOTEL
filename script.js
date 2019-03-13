@@ -120,6 +120,7 @@ function convertUnits() {
         }
     });
     units = units.reverse();
+    sortSnowArray(0, 1);
     populateTable(snowArray);
 }
 
