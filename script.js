@@ -4,6 +4,12 @@ const corsUrl = 'https://cors-anywhere.herokuapp.com/' + url;
 
 let snowArray = [];
 
+let sortObj = {
+    sortColumn: 0,
+    sortOrder: 0,
+    sortClass: ''
+}
+
 let units = ['inches', 'centimeters'];
 
 function fetchCSV(corsUrl) {
@@ -27,8 +33,8 @@ function populateSnowObj(keys, indexes, csvArray, i) {
     const snowObj = {};
     let total = 0;
     keys.forEach((key, index) => {
-        snowObj[key] = isNaN(parseFloat(csvArray[i][indexes[index]])) ? '–' : parseFloat(csvArray[i][indexes[index]]);
-        if (index > 0 && !isNaN(snowObj[key])) total += snowObj[key];
+        snowObj[key] = isNaN(parseFloat(csvArray[i][indexes[index]])) ? 0 : parseFloat(csvArray[i][indexes[index]]);
+        if (index > 0) total += snowObj[key];
     })
     snowObj.total = Math.floor(total * 10) / 10;
     
@@ -71,24 +77,25 @@ function populateTable(snowArray) {
 
 function handleTHClick() {
     $('#content').on('click', 'th', e => {
-        const index = $(e.target).index();
+        sortObj.sortColumn = $(e.target).index();
         if ($(e.target).hasClass('down')) {
-            sortSnowArray(index, 1, 'up');
-        } else if ($(e.target).hasClass('up')) {
-            sortSnowArray(0, -1);
+            sortObj.sortOrder = 1;
+            sortObj.sortClass = 'up';
         } else {
-            sortSnowArray(index, -1, 'down');
+            sortObj.sortOrder = -1;
+            sortObj.sortClass = 'down';
         }
+        sortSnowArray(sortObj);
     });
 }
 
-function sortSnowArray(index, order, className) {
+function sortSnowArray(sortObj) {
     const keyArray = ['year', 'janSnow', 'febSnow', 'marSnow', 'aprSnow', 'maySnow', 'junSnow', 'total'];
-    snowArray.sort(sortByKey(keyArray[index], order));
+    snowArray.sort(sortByKey(keyArray[sortObj.sortColumn], sortObj.sortOrder));
     populateTable(snowArray);
-    if (className) {
-        $(`th:nth-child(${index + 1})`).addClass(className);
-        $(`td:nth-child(${index + 1})`).addClass('highlight');
+    if (sortObj.sortClass) {
+        $(`th:nth-child(${sortObj.sortColumn + 1})`).addClass(sortObj.sortClass);
+        $(`td:nth-child(${sortObj.sortColumn + 1})`).addClass('highlight');
     }
 }
 
@@ -110,7 +117,7 @@ function handleToggleUnits() {
 function convertUnits() {
     snowArray.forEach(snowYear => {
         for (const key in snowYear) {
-            if (key !== 'year' && snowYear[key] !== '–') {
+            if (key !== 'year') {
                 if (units[0] === 'inches') {
                     snowYear[key] = Math.round(snowYear[key] * 10 * 2.54) / 10;
                 } else {
@@ -120,8 +127,7 @@ function convertUnits() {
         }
     });
     units = units.reverse();
-    sortSnowArray(0, 1);
-    populateTable(snowArray);
+    sortSnowArray(sortObj);
 }
 
 $(function() {
